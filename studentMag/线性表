@@ -1,0 +1,70 @@
+#include<iostream>
+#define LISTINCREMENT 10
+typedef int ElemType;
+using namespace std;
+typedef struct
+{
+   ElemType* base;
+   int length;
+   int listsize;
+}Sqlist;
+void create_list(Sqlist&L,int n)//创建线性表
+{
+	L.length=n;
+	L.listsize=L.length+LISTINCREMENT;
+	L.base=new int[L.listsize];
+	for(int i=0;i<n;i++)
+		cin>>L.base[i];
+}
+void listInsert(Sqlist&L,int i,ElemType e)//插入一个数据
+{
+	int *q,*p;
+	q=&(L.base[i-1]);
+	for(p=&(L.base[L.length-1]);p>=q;p--)
+		*(p+1)=*p;
+	*q=e;
+L.length++;
+}
+void listdelete(Sqlist&L,int i,ElemType&e)//删除一个数据
+{
+	int *q,*p;
+	q=&(L.base[i-1]);
+	e=*q;
+	p=&(L.base[L.length-1]);
+	for(q;q<p;q++)
+		*q=*(q+1);
+	--L.length;
+}
+Sqlist reverse(Sqlist&L)//前后置换
+{
+	int p;
+	for(int i=0;i<=(L.length/2-1);i++)
+	{
+		p=L.base[i];
+	    L.base[i]=L.base[L.length-1-i];
+	    L.base[L.length-1-i]=p;
+	}
+	return L;
+}
+void display(Sqlist&L)
+{
+	for(int i=0;i<L.length;i++)
+		cout<<L.base[i]<<" ";
+}
+void main()
+{
+	void create_list(Sqlist&,int);
+	void listInsert(Sqlist&,int,ElemType e);
+	void listdelete(Sqlist&,int,ElemType&);
+	Sqlist reverse(Sqlist&);
+	void display(Sqlist&);
+	int n;
+	cout<<"please inter the number of arr:"<<endl;
+	cin>>n;
+	Sqlist L;
+	cout<<"please inter the number of n:"<<endl;
+	create_list(L,n);
+	L=reverse(L);
+    display(L);
+}
+
